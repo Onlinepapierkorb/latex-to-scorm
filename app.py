@@ -96,7 +96,7 @@ if st.button("Wie funktioniert der Code?"):
     
     2. **Konvertierung von LaTeX nach HTML**  
        - Der LaTeX-Inhalt wird mit `pylatexenc` in HTML umgewandelt.
-       - Dabei werden gängige LaTeX-Elemente (wie `\newpage` oder `\addsec`) in HTML übertragen.
+       - Dabei werden gängige LaTeX-Elemente (wie newpage oder addsec) in HTML übertragen.
 
     3. **Erstellung des SCORM-Pakets**  
        - Das HTML wird als `index.html` gespeichert.
