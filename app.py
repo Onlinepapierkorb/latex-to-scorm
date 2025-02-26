@@ -1,17 +1,16 @@
 import streamlit as st
 import zipfile
-import pypandoc
-pypandoc.download_pandoc()
 from io import BytesIO
+from pylatexenc.latex2text import LatexNodes2Text  # Alternative für LaTeX-Konvertierung
 
 def convert_latex_to_html(latex_content: str) -> str:
     """
-    Konvertiert den LaTeX-Text in HTML mithilfe von Pandoc.
-    Dabei werden gängige LaTeX-Befehle (z. B. \newpage, \addsec) in entsprechende HTML-Elemente umgewandelt.
+    Wandelt LaTeX in HTML um.
     """
     try:
-        html_content = pypandoc.convert_text(latex_content, 'html', format='latex')
-        return html_content
+        html_content = LatexNodes2Text().latex_to_text(latex_content)  # Wandelt LaTeX in lesbaren Text um
+        html_content = html_content.replace("\n", "<br>")  # Zeilenumbrüche in HTML-Format
+        return f"<html><head><meta charset='utf-8'><title>Konvertiertes Dokument</title></head><body>{html_content}</body></html>"
     except Exception as e:
         raise Exception("Fehler bei der LaTeX-zu-HTML-Konvertierung: " + str(e))
 
@@ -96,8 +95,8 @@ if st.button("Wie funktioniert der Code?"):
        - Der Benutzer kann eine `.tex`-Datei hochladen.
     
     2. **Konvertierung von LaTeX nach HTML**  
-       - Der LaTeX-Inhalt wird mit `pypandoc.convert_text()` in HTML umgewandelt.
-       - Dabei werden gängige LaTeX-Elemente (wie newpage oder addsec) in HTML übertragen.
+       - Der LaTeX-Inhalt wird mit `pylatexenc` in HTML umgewandelt.
+       - Dabei werden gängige LaTeX-Elemente (wie `\newpage` oder `\addsec`) in HTML übertragen.
 
     3. **Erstellung des SCORM-Pakets**  
        - Das HTML wird als `index.html` gespeichert.
@@ -109,6 +108,6 @@ if st.button("Wie funktioniert der Code?"):
 
     **Verwendete Technologien:**
     - **Streamlit** für die Benutzeroberfläche
-    - **pypandoc** für die LaTeX-zu-HTML-Konvertierung
+    - **pylatexenc** für die LaTeX-zu-HTML-Konvertierung
     - **zipfile** für das Erstellen des SCORM-Pakets
     """)
