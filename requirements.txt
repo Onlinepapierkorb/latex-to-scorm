@@ -1,3 +1,4 @@
-﻿streamlit
+streamlit
 pylatexenc
 pymupdf
+python-docx
